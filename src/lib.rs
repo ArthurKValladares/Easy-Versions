@@ -1,3 +1,4 @@
 mod single;
+mod triple;
 
-pub use single::VersionSingle;
+pub use {single::VersionSingle, triple::VersionTriple};
