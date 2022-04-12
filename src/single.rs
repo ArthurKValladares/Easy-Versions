@@ -7,7 +7,7 @@ macro_rules! to_primitive_impl {
 }
 
 macro_rules! to_primitives {
-    ($self:ident) => {
+    () => {
         to_primitive_impl!(to_i8, i8);
         to_primitive_impl!(to_i16, i16);
         to_primitive_impl!(to_i32, i32);
@@ -22,13 +22,13 @@ macro_rules! to_primitives {
 
 #[derive(Clone, Copy, Debug, Eq, Hash, PartialEq)]
 pub struct VersionSingle<I: num::Integer + num::cast::ToPrimitive> {
-    version: I,
+    pub(crate) version: I,
 }
 
 impl<I: num::Integer + num::cast::ToPrimitive> VersionSingle<I> {
-    pub fn from_version(version: I) -> Self {
+    pub fn new(version: I) -> Self {
         Self { version }
     }
 
-    to_primitives!(self);
+    to_primitives!();
 }
