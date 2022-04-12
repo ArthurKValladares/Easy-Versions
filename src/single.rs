@@ -20,6 +20,7 @@ macro_rules! to_primitives {
     };
 }
 
+#[derive(Clone, Copy, Debug, Eq, Hash, PartialEq)]
 pub struct VersionSingle<I: num::Integer + num::cast::ToPrimitive> {
     version: I,
 }
