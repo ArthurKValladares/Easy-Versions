@@ -21,13 +21,17 @@ macro_rules! to_primitives {
 }
 
 #[derive(Clone, Copy, Debug, Eq, Hash, PartialEq)]
-pub struct VersionSingle<I: num::Integer + num::cast::ToPrimitive> {
-    pub(crate) version: I,
+pub struct VersionSingle<I: num::Integer + num::cast::ToPrimitive + Copy> {
+    version: I,
 }
 
-impl<I: num::Integer + num::cast::ToPrimitive> VersionSingle<I> {
+impl<I: num::Integer + num::cast::ToPrimitive + Copy> VersionSingle<I> {
     pub fn new(version: I) -> Self {
         Self { version }
+    }
+
+    pub fn version(&self) -> I {
+        self.version
     }
 
     to_primitives!();

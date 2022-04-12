@@ -26,13 +26,13 @@ macro_rules! to_primitives {
 }
 
 #[derive(Clone, Copy, Debug, Eq, Hash, PartialEq)]
-pub struct VersionTriple<I: num::Integer + num::cast::ToPrimitive> {
+pub struct VersionTriple<I: num::Integer + num::cast::ToPrimitive + Copy> {
     major: I,
     minor: I,
     patch: I,
 }
 
-impl<I: num::Integer + num::cast::ToPrimitive + num::Zero> VersionTriple<I> {
+impl<I: num::Integer + num::cast::ToPrimitive + num::Zero + Copy> VersionTriple<I> {
     pub fn new(major: I, minor: I, patch: I) -> Self {
         Self {
             major,
@@ -41,15 +41,27 @@ impl<I: num::Integer + num::cast::ToPrimitive + num::Zero> VersionTriple<I> {
         }
     }
 
+    pub fn major(&self) -> I {
+        self.major
+    }
+
+    pub fn minor(&self) -> I {
+        self.minor
+    }
+
+    pub fn patch(&self) -> I {
+        self.patch
+    }
+
     to_primitives!();
 }
 
-impl<I: num::Integer + num::cast::ToPrimitive + num::Zero> From<VersionSingle<I>>
+impl<I: num::Integer + num::cast::ToPrimitive + num::Zero + Copy> From<VersionSingle<I>>
     for VersionTriple<I>
 {
     fn from(single: VersionSingle<I>) -> VersionTriple<I> {
         Self {
-            major: single.version,
+            major: single.version(),
             minor: I::zero(),
             patch: I::zero(),
         }
